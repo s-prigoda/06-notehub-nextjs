@@ -4,8 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createNote } from '@/lib/api';
-import css from './NoteForm.module.css';
 import { NoteTag } from '@/types/note';
+import css from './NoteForm.module.css';
+
 interface NoteFormProps {
   onClose: () => void;
 }
@@ -22,7 +23,7 @@ const validationSchema = Yup.object({
     .max(50, 'Maximum 50 characters')
     .required('Title is required'),
   tag: Yup.string()
-    .oneOf(['Personal', 'Work', 'Study'], 'Invalid tag')
+    .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'], 'Invalid tag')
     .required('Tag is required'),
   content: Yup.string().max(500, 'Maximum 500 characters'),
 });
@@ -63,9 +64,11 @@ export default function NoteForm({ onClose }: NoteFormProps) {
               <option value="" disabled>
                 Select a tag
               </option>
-              <option value="Personal">Personal</option>
+              <option value="Todo">Todo</option>
               <option value="Work">Work</option>
-              <option value="Study">Study</option>
+              <option value="Personal">Personal</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Shopping">Shopping</option>
             </Field>
             <ErrorMessage name="tag" component="div" className={css.error} />
           </div>
