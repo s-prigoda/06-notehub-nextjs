@@ -16,17 +16,15 @@ export default function NotesClient() {
   const [search, setSearch] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // Дебаунс для пошуку (300мс)
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setSearch(value);
-    setPage(1); // При новому пошуку повертаємось на 1 сторінку
+    setPage(1);
   }, 300);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['notes', page, search],
     queryFn: () => fetchNotes({ page, search, perPage: 12 }),
     placeholderData: keepPreviousData,
-    staleTime: 1000 * 60 * 5, // Кеш вважається свіжим 5 хвилин
   });
 
   const openModal = () => setIsModalOpen(true);
@@ -55,7 +53,6 @@ export default function NotesClient() {
       </header>
 
       <main className={css.mainContent}>
-        {/* Завдяки prefetch, isLoading не буде true при першому завантаженні */}
         {isLoading && !data && <p className={css.status}>Loading notes...</p>}
         {isError && <p className={css.error}>Error loading notes!</p>}
 
