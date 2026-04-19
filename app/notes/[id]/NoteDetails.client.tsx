@@ -17,6 +17,8 @@ export default function NoteDetailsClient() {
     queryKey: ['note', noteId],
     queryFn: () => fetchNoteById(noteId as string),
     enabled: !!noteId,
+    refetchOnMount: false,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading) return <p className={css.status}>Loading details...</p>;

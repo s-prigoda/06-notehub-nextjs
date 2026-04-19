@@ -65,7 +65,7 @@ export default function NotesClient() {
 
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          <NoteForm onSuccess={closeModal} onCancel={closeModal} />
+          <NoteForm onClose={closeModal} />
         </Modal>
       )}
     </div>
